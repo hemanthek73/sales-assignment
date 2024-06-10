@@ -1,5 +1,7 @@
 from collections import defaultdict
 
+
+
 def read_sales_data(file_path):
     sales_data = []
     with open(file_path, 'r') as file:
@@ -21,6 +23,7 @@ def calculate_monthly_sales(sales_data):
     for date, _, _, _, total_price in sales_data:
         month = date[:7]
         monthly_sales[month] += total_price
+
     return monthly_sales
 
 def calculate_monthly_popular_items(sales_data):
@@ -33,21 +36,23 @@ def calculate_monthly_popular_items(sales_data):
     monthly_popular_items = {}
     for month, items in monthly_items.items():
         popular_item = max(items, key=items.get)
+        # print(items[popular_item],">>")
         monthly_popular_items[month] = (popular_item, items[popular_item])
-
+        # print(monthly_popular_items,">>>")
     return monthly_popular_items
 
 def calculate_monthly_top_revenue_items(sales_data):
     monthly_revenue_items = defaultdict(lambda: defaultdict(float))
     for date, sku, _, _, total_price in sales_data:
         month = date[:7]
+        # print(month,"::::")
         monthly_revenue_items[month][sku] += total_price
+        
 
     monthly_top_revenue_items = {}
     for month, items in monthly_revenue_items.items():
         top_revenue_item = max(items, key=items.get)
         monthly_top_revenue_items[month] = (top_revenue_item, items[top_revenue_item])
-
     return monthly_top_revenue_items
 
 def calculate_monthly_popular_item_stats(sales_data, monthly_popular_items):
